@@ -1,21 +1,24 @@
 // var ip = require('ip')
 
 // does `a` follow `b`?
-export function follows (users, a, b) {
+var follows =
+exports.follows = function (users, a, b) {
   var bp = users.profiles[b]
   if (!bp) return false
   return bp.followers[a]
 }
 
 // did `a` flag `b`?
-export function flags (users, a, b) {
+var flags =
+exports.flags = function (users, a, b) {
   var bp = users.profiles[b]
   if (!bp) return false
   return bp.flaggers[a]
 }
 
 // get all who `a` follows
-export function followeds (users, a) {
+var followeds =
+exports.followeds = function (users, a) {
   var ids = []
   for (var b in users.profiles) {
     if (follows(users, a, b))
@@ -25,7 +28,8 @@ export function followeds (users, a) {
 }
 
 // get all who `a` follows, but who doesnt follow `a` back
-export function followedNonfriends (users, a) {
+var followedNonfriends =
+exports.followedNonfriends = function (users, a) {
   var ids = []
   for (var b in users.profiles) {
     if (follows(users, a, b) && !follows(users, b, a))
@@ -35,14 +39,16 @@ export function followedNonfriends (users, a) {
 }
 
 // get all who follow `a`
-export function followers (users, b) {
+var followers =
+exports.followers = function (users, b) {
   var bp = users.profiles[b]
   if (!bp) return []
   return Object.keys(bp.followers)
 }
 
 // get all who follow `a`, but who `a` doesnt follow back
-export function followerNonfriends (users, a) {
+var followerNonfriends =
+exports.followerNonfriends = function (users, a) {
   var ids = []
   for (var b in users.profiles) {
     if (follows(users, b, a) && !follows(users, a, b))
@@ -52,7 +58,8 @@ export function followerNonfriends (users, a) {
 }
 
 // get all who follow `c`, who are followed by `a`
-export function followedFollowers (users, a, c, includeA) {
+var followedFollowers =
+exports.followedFollowers = function (users, a, c, includeA) {
   var ids = []
   for (var b in users.profiles) {
     if (follows(users, a, b) && follows(users, b, c))
@@ -64,7 +71,8 @@ export function followedFollowers (users, a, c, includeA) {
 }
 
 // get all who follow `c`, who are not followed by `a`
-export function unfollowedFollowers (users, a, c) {
+var unfollowedFollowers =
+exports.unfollowedFollowers = function (users, a, c) {
   var ids = []
   for (var b in users.profiles) {
     if (a != b && !follows(users, a, b) && follows(users, b, c))
@@ -74,7 +82,8 @@ export function unfollowedFollowers (users, a, c) {
 }
 
 // get all who flag `c`, who are followed by `a`
-export function followedFlaggers (users, a, c, includeA) {
+var followedFlaggers =
+exports.followedFlaggers = function (users, a, c, includeA) {
   var ids = []
   for (var b in users.profiles) {
     if (follows(users, a, b) && flags(users, b, c))
@@ -86,7 +95,8 @@ export function followedFlaggers (users, a, c, includeA) {
 }
 
 // get all who follow `a`, and who `a` follows back
-export function friends (users, a) {
+var friends =
+exports.friends = function (users, a) {
   // all two-way follows
   return followers(users, a).filter(function (b) {
     return follows(users, a, b)
@@ -96,7 +106,7 @@ export function friends (users, a) {
 // TODO
 // // is `id` a pub?
 // var isPub =
-// export function isPub (id) {
+// exports.isPub = function (id) {
 //   // try to find the ID in the peerlist, and see if it's a public peer if so
 //   for (var i=0; i < peers.length; i++) {
 //     var peer = peers[i]
@@ -107,7 +117,8 @@ export function friends (users, a) {
 // }
 
 // user-sort by popularity
-export function sortByPopularity (users, a, b) {
+var sortByPopularity =
+exports.sortByPopularity = function (users, a, b) {
   if (followedFlaggers(users, user.id, a, true).length)
     return 1 // disqualified!
   if (followedFlaggers(users, user.id, b, true).length)
