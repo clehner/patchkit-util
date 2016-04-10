@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/patchkit/patchkit-util#readme",
   "dependencies": {
-    "moment": "^2.12.0"
+    "moment": "^2.12.0",
+    "ssb-ref": "^2.3.0"
   }
 }

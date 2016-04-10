@@ -1,4 +1,5 @@
 var moment = require('moment')
+var ssbref = require('ssb-ref')
 
 // helper to put an s at the end of words if they're plural only
 var plural =
@@ -71,6 +72,30 @@ module.exports.getProfilePicRef = function (users, id) {
 
 var getProfilePicUrl =
 module.exports.getProfilePicUrl = function (users, id, toUrl) {
+  toUrl = toUrl || defaultToUrl
   var link = getProfilePic(users, id)
   return toUrl(link && link.link, { isProfilePic: true })
+}
+
+
+// default toUrl() definition
+var defaultToUrl =
+module.exports.toUrl = function (ref, opts) {
+  // @-mentions
+  if (opts && opts.mentionNames && ref in opts.mentionNames)
+    return '#/profile/'+encodeURIComponent(opts.mentionNames[ref])
+
+  // standard ssb-refs
+  if (ssbref.isFeedId(ref))
+    return '#/profile/'+encodeURIComponent(ref)
+  else if (ssbref.isMsgId(ref))
+    return '#/msg/'+encodeURIComponent(ref)
+  else if (ssbref.isBlobId(ref))
+    return '/'+encodeURIComponent(ref)
+  else if (opts && opts.isProfilePic) {
+    if (ref)
+      return '/'+ref
+    return '/img/fallback.png'
+  }
+  return ''
 }
