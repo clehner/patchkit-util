@@ -1,6 +1,6 @@
 {
   "name": "patchkit-util",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Common helper functions for Patchkit",
   "main": "index.js",
   "scripts": {
