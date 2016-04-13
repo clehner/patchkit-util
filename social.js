@@ -119,9 +119,5 @@ exports.friends = function (users, a) {
 // user-sort by popularity
 var sortByPopularity =
 exports.sortByPopularity = function (users, a, b) {
-  if (followedFlaggers(users, user.id, a, true).length)
-    return 1 // disqualified!
-  if (followedFlaggers(users, user.id, b, true).length)
-    return -1 // disqualified!
   return followers(users, b).length - followers(users, a).length
 }
