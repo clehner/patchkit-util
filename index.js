@@ -1,6 +1,8 @@
 var moment = require('moment')
 var ssbref = require('ssb-ref')
 
+require('moment/min/locales.min')
+
 // helper to put an s at the end of words if they're plural only
 var plural =
 module.exports.plural = function (n) {
@@ -29,8 +31,9 @@ const startOfDay = moment().startOf('day')
 const lastWeek = moment().subtract(1, 'weeks')
 const lastYear = moment().subtract(1, 'years')
 var niceDate =
-module.exports.niceDate = function (ts, ago) {
+module.exports.niceDate = function (ts, ago, locale) {
   var d = moment(ts)
+  d.locale(locale)
   if (ago)
     return d.fromNow()
   if (d.isBefore(lastYear))
